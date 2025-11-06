@@ -1,4 +1,4 @@
-FROM python:3.10-slim-buster
+FROM python:3.10-slim-bullseye
 
 WORKDIR /app
 COPY . /app
@@ -10,10 +10,10 @@ RUN apt-get update -y && \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install AWS CLI via pip (much simpler and stable)
+# Install AWS CLI via pip (stable and fast)
 RUN pip install --no-cache-dir awscli
 
-# Install other dependencies
+# Install app dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python3", "app.py"]

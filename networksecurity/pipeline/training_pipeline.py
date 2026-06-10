@@ -99,8 +99,14 @@ class TrainingPipeline:
         
     def sync_saved_model_dir_to_s3(self):
         try:
+            # timestamped copy keeps a history of every trained model
             aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/final_model/{self.training_pipeline_config.timestamp}"
             self.s3_sync.sync_folder_to_s3(folder = self.training_pipeline_config.model_dir,aws_bucket_url=aws_bucket_url)
+
+            # stable 'latest' copy is what the serving app pulls at startup,
+            # so a fresh container can serve predictions without retraining
+            latest_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/final_model/latest"
+            self.s3_sync.sync_folder_to_s3(folder = self.training_pipeline_config.model_dir,aws_bucket_url=latest_bucket_url)
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         

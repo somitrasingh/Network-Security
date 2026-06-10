@@ -1,0 +1,30 @@
+# Terraform standard ignores.
+# State files can contain secrets and resource IDs — never commit them.
+
+# Local state and backups
+*.tfstate
+*.tfstate.*
+
+# Provider plugins, modules, and other working files
+.terraform/
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Override files (often used for local-only tweaks)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI config / plan output files
+.terraformrc
+terraform.rc
+*.tfplan
+
+# NOTE: .terraform.lock.hcl is intentionally NOT ignored — commit it so
+# everyone uses the same provider versions.
+# NOTE: terraform.tfvars is also tracked here on purpose: it holds only
+# non-secret example values for this portfolio project. If you ever add
+# secrets to it, add it to this file and rotate the secrets.
